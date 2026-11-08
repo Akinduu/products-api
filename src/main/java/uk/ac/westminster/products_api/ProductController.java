@@ -1,5 +1,5 @@
-package uk.ac.westminster.products_api;
 
+package uk.ac.westminster.products_api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,6 @@ public class ProductController {
     @GetMapping("/products")
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
-
     }
 
     @GetMapping("/products/{id}")
@@ -23,12 +22,19 @@ public class ProductController {
         return productService.getProductById(id).orElse(null);
     }
 
+    // Activity 5: New summaries endpoint
+    @GetMapping("/products/summaries")
+    public List<String> getSummaries() {
+        return productService.getAllSummaries();
+    }
+
+    // Activity 3: Product is abstract, so accept a concrete subclass
     @PostMapping("/products")
-    public Product addProduct(@RequestBody Product product) {
+    public Product addProduct(@RequestBody DigitalProduct product) {
         return productService.addProduct(product);
     }
 
-    @DeleteMapping("products/{id}")
+    @DeleteMapping("/products/{id}")
     public void deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
     }
@@ -37,9 +43,4 @@ public class ProductController {
     public List<Product> search(@RequestParam String name) {
         return productService.findByName(name);
     }
-
-
-
-
-
 }
